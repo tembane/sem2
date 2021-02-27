@@ -1,0 +1,13 @@
+﻿  main.cpp
+  Source.cpp
+E:\projects\sem2\LAB1\Source.cpp(292,23): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(292,44): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(297,29): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(297,50): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(396,23): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(537,13): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(543,20): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(572,13): warning C4018: <: несоответствие типов со знаком и без знака
+E:\projects\sem2\LAB1\Source.cpp(578,20): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+  LAB1.vcxproj -> E:\projects\sem2\LAB1\Debug\LAB1.exe

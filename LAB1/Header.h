@@ -1,0 +1,14 @@
+int menu(struct Flights*, int);
+void add(struct Flights*, int);
+void show(struct Flights*, int);
+void change(struct Flights*, int);
+void del(struct Flights*, int);
+void search(struct Flights*, int);
+void print(struct Flights*, int, int);
+void sort(struct Flights*, int);
+void check(struct Flights*, int);
+void partSearch(struct Flights*, int);
+void printLine();
+void deleteEnter(struct Flights*, int, int);
+void findChar(struct Flights*, int);
+void findCharNumber(struct Flights*, int);
