@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 struct Flights
 {
 	int number;
@@ -51,6 +52,7 @@ int menu(struct Flights* flight, int k)
 void add(struct Flights* flight, int k)
 {
 	int k1 = 0, k2=0;
+	system("CLS");
 	printf("Enter number of flights you want to add: ");
 	if (k != 0)
 	{
@@ -108,12 +110,14 @@ void add(struct Flights* flight, int k)
 		}
 		printf("\n");
 	}
+	system("CLS");
 	menu(flight, k);
 }
 void show(struct Flights* flight, int k)
 {
 	int n=0;
 	check(flight, k);
+	system("CLS");
 	printf("1)Show all notes\n2)Show 1 note\n");
 	while (!scanf_s("%d", &n) || (n<1) ||(n>2))
 	{
@@ -123,6 +127,7 @@ void show(struct Flights* flight, int k)
 	printf("\n");
 	if (n == 1)
 	{
+		system("CLS");
 		print(flight, k, -1);
 	}
 	else
@@ -134,6 +139,7 @@ void show(struct Flights* flight, int k)
 			rewind(stdin);
 		}
 		n--;
+		system("CLS");
 		print(flight, k, n);
 	}
 	menu(flight, k);
@@ -142,6 +148,8 @@ void change(struct Flights* flight, int k)
 {
 	int n = 0, s;
 	check(flight, k);
+	system("CLS");
+	print(flight, k, -1);
 	printf("Enter number of note you want to change: ");
 	if (k != 0)
 	{
@@ -208,14 +216,17 @@ void change(struct Flights* flight, int k)
 			break;
 		case 6:
 			f = 1;
+			break;
 		}
 	} while (f!=1);
+	system("CLS");
 	menu(flight, k);
 }
 void del(struct Flights* flight, int k)
 {
 	int n = 0;
 	check(flight, k);
+	system("CLS");
 	printf("1)Delete all notes\n2)Delete 1 note\n");
 	while (!scanf_s("%d", &n) || (n < 1) || (n > 2))
 	{
@@ -226,6 +237,7 @@ void del(struct Flights* flight, int k)
 	if (n == 1)
 	{
 		free(flight);
+		system("CLS");
 		printf("All notes were successfully deleted!\n");
 		k = 0;
 	}
@@ -243,6 +255,7 @@ void del(struct Flights* flight, int k)
 			flight[i] = flight[i + 1];
 		}
 		k--;
+		system("CLS");
 		printf("Note was successfully deleted!\n");
 	}
 	menu(flight, k);
@@ -250,16 +263,18 @@ void del(struct Flights* flight, int k)
 void search(struct Flights* flight, int k)
 {
 	check(flight, k);
+	system("CLS");
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");
 	printf("2)Destination\n");
 	printf("3)Date\n");
 	printf("4)Time\n");
 	printf("5)Price\n");
+	printf("6)Exit\n");
 	int n, s=0, flag=0;
 	double s1; 
 	char str[20];
-	while (!scanf_s("%d", &n) || (n < 1) || (n > 5))
+	while (!scanf_s("%d", &n) || (n < 1) || (n > 6))
 	{
 		printf("Incorrect value\n");
 		rewind(stdin);
@@ -355,6 +370,11 @@ void search(struct Flights* flight, int k)
 			}
 		}
 		break;
+	case 6:
+		system("CLS");
+		menu(flight, k);
+		return;
+		break;
 	}
 	if (flag == 0) printf("Nothing found...Try again.\n");
 	menu(flight, k);
@@ -365,83 +385,86 @@ void sort(struct Flights* flight, int k)
 	struct Flights temp;
 	int s;
 	int f = 0;
-	
-		printf("1)Sort by number of flight\n");
-		printf("2)Sort by destination\n");
-		printf("3)Sort by date of flight\n");
-		printf("4)Sort by time of flight\n");
-		printf("5)Sort by price of flight\n");
-		printf("6)Exit\n");
-		while (!scanf_s("%d", &s) || (s < 1) || (s > 6))
+	system("CLS");
+	print(flight, k, -1);
+	printf("1)Sort by number of flight\n");
+	printf("2)Sort by destination\n");
+	printf("3)Sort by date of flight\n");
+	printf("4)Sort by time of flight\n");
+	printf("5)Sort by price of flight\n");
+	printf("6)Exit\n");
+	while (!scanf_s("%d", &s) || (s < 1) || (s > 6))
+	{
+		printf("Incorrect value. Try again.\n");
+		rewind(stdin);
+	}
+	switch (s)
+	{
+	case 1:
+		for (int i = 0; i < k - 1; i++)
 		{
-			printf("Incorrect value. Try again.\n");
-			rewind(stdin);
+			if (flight[i].number > flight[i + 1].number)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
 		}
-		switch (s)
+		break;
+	case 2:
+		for (int i = 0; i < k - 1; i++)
 		{
-		case 1:
-			for (int i = 0; i < k - 1; i++)
+			for (int j = 0; j < strlen(flight[i].destination); j++)
 			{
-				if (flight[i].number > flight[i + 1].number)
+				if (flight[i].destination[j] > flight[i + 1].destination[j])
 				{
 					temp = flight[i];
 					flight[i] = flight[i + 1];
 					flight[i + 1] = temp;
+					j = strlen(flight[i].destination);
 				}
 			}
-			break;
-		case 2:
-			for (int i = 0; i < k - 1; i++)
-			{
-				for (int j = 0; j < strlen(flight[i].destination); j++)
-				{
-					if (flight[i].destination[j] > flight[i + 1].destination[j])
-					{
-						temp = flight[i];
-						flight[i] = flight[i + 1];
-						flight[i + 1] = temp;
-						j = strlen(flight[i].destination);
-					}
-				}
-			}
-			break;
-		case 3:
-			for (int i = 0; i < k - 1; i++)
-			{
-				if (flight[i].date > flight[i + 1].date)
-				{
-					temp = flight[i];
-					flight[i] = flight[i + 1];
-					flight[i + 1] = temp;
-				}
-			}
-			break;
-		case 4:
-			for (int i = 0; i < k - 1; i++)
-			{
-				if (flight[i].time > flight[i + 1].time)
-				{
-					temp = flight[i];
-					flight[i] = flight[i + 1];
-					flight[i + 1] = temp;
-				}
-			}
-			break;
-		case 5:
-			for (int i = 0; i < k - 1; i++)
-			{
-				if (flight[i].price > flight[i + 1].price)
-				{
-					temp = flight[i];
-					flight[i] = flight[i + 1];
-					flight[i + 1] = temp;
-				}
-			}
-			break;
-		case 6:
-			menu(flight, k);
-			return;
 		}
+		break;
+	case 3:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].date > flight[i + 1].date)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 4:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].time > flight[i + 1].time)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 5:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].price > flight[i + 1].price)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 6:
+		system("CLS");
+		menu(flight, k);
+		return;
+	}
+	system("CLS");
 	menu(flight, k);
 }
 void check(struct Flights* flight, int k)
@@ -501,25 +524,35 @@ void deleteEnter(struct Flights* flight, int k, int n)
 void partSearch(struct Flights* flight, int k)
 {
 	check(flight, k);
+	system("CLS");
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");
 	printf("2)Destination\n");
+	printf("3)Exit\n");
 	int n;
-	while (!scanf_s("%d", &n) || (n < 1) || (n > 2))
+	while (!scanf_s("%d", &n) || (n < 1) || (n > 3))
 	{
 		printf("Incorrect value. Try again.\n");
 		rewind(stdin);
 	}
 	printf("\n");
-	if (n == 1)
+	switch (n)
 	{
+	case 1:
+		system("CLS");
 		printf("Enter symbols of number (*a*b*): ");
 		findCharNumber(flight, k);
-	}
-	else
-	{
+		break;
+	case 2:
+		system("CLS");
 		printf("Enter symbols of destination (*a*b*): ");
 		findChar(flight, k);
+		break;
+	case 3:
+		system("CLS");
+		menu(flight, k);
+		return;
+		break;
 	}
 	menu(flight, k);
 }
