@@ -382,6 +382,41 @@ void search(struct Flights* flight, int k)
 void sort(struct Flights* flight, int k)
 {
 	check(flight, k);
+	system("CLS");
+	printf("How to sort:\n");
+	printf("1)From Min to Max\n");
+	printf("2)From Max to Min\n");
+	printf("3)Exit\n");
+	int n;
+	while (!scanf_s("%d", &n) || (n < 1) || (n > 3))
+	{
+		printf("Incorrect value. Try again.\n");
+		rewind(stdin);
+	}
+	printf("\n");
+	switch (n)
+	{
+	case 1:
+		system("CLS");
+		sortFromMin(flight, k);
+		return;
+		break;
+	case 2:
+		system("CLS");
+		sortFromMax(flight, k);
+		return;
+		break;
+	case 3:
+		system("CLS");
+		menu(flight, k);
+		return;
+		break;
+	}
+	menu(flight, k);
+}
+void sortFromMin(struct Flights* flight, int k)
+{
+	check(flight, k);
 	struct Flights temp;
 	int s;
 	int f = 0;
@@ -452,6 +487,94 @@ void sort(struct Flights* flight, int k)
 		for (int i = 0; i < k - 1; i++)
 		{
 			if (flight[i].price > flight[i + 1].price)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 6:
+		system("CLS");
+		menu(flight, k);
+		return;
+	}
+	system("CLS");
+	menu(flight, k);
+}
+void sortFromMax(struct Flights* flight, int k)
+{
+	check(flight, k);
+	struct Flights temp;
+	int s;
+	int f = 0;
+	system("CLS");
+	print(flight, k, -1);
+	printf("1)Sort by number of flight\n");
+	printf("2)Sort by destination\n");
+	printf("3)Sort by date of flight\n");
+	printf("4)Sort by time of flight\n");
+	printf("5)Sort by price of flight\n");
+	printf("6)Exit\n");
+	while (!scanf_s("%d", &s) || (s < 1) || (s > 6))
+	{
+		printf("Incorrect value. Try again.\n");
+		rewind(stdin);
+	}
+	switch (s)
+	{
+	case 1:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].number < flight[i + 1].number)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 2:
+		for (int i = 0; i < k - 1; i++)
+		{
+			for (int j = 0; j < strlen(flight[i].destination); j++)
+			{
+				if (flight[i].destination[j] < flight[i + 1].destination[j])
+				{
+					temp = flight[i];
+					flight[i] = flight[i + 1];
+					flight[i + 1] = temp;
+					j = strlen(flight[i].destination);
+				}
+			}
+		}
+		break;
+	case 3:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].date < flight[i + 1].date)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 4:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].time < flight[i + 1].time)
+			{
+				temp = flight[i];
+				flight[i] = flight[i + 1];
+				flight[i + 1] = temp;
+			}
+		}
+		break;
+	case 5:
+		for (int i = 0; i < k - 1; i++)
+		{
+			if (flight[i].price < flight[i + 1].price)
 			{
 				temp = flight[i];
 				flight[i] = flight[i + 1];
