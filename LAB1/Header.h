@@ -12,3 +12,7 @@ void printLine();
 void deleteEnter(struct Flights*, int, int);
 void findChar(struct Flights*, int);
 void findCharNumber(struct Flights*, int);
+void sortFromMin(struct Flights*, int);
+void sortFromMax(struct Flights*, int);
+void deleteByTheOption(struct Flights*, int);
+void delExact(struct Flights* flight, int k, int i);
