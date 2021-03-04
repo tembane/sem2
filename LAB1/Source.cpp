@@ -306,19 +306,26 @@ void search(struct Flights* flight, int k)
 		printf("Enter destination: ");
 		rewind(stdin);
 		fgets(str, 20, stdin);
-		for (int i = 0; i < k; i++)
+		for (int i = 0; i < 20; i++)
 		{
-			for (int j = 0; (j < strlen(str)) || (j < strlen(flight[i].destination)); j++)
+			if (str[i] == '\n')
+				for (i; i < 20; i++)
+					str[i] = str[i + 1];
+		}
+		for (int i = 0; i < k; ++i)
+		{
+			int temp = 0;
+			if (strlen(flight[i].destination) == strlen(str))
 			{
-				if (flight[i].destination[j] != str[j]) break;
-				else
+				for (int j = 0; j < strlen(str); j++)
 				{
-					if ((i == k - 1) && (j < strlen(str)) || (j < strlen(flight[i].destination)))
-					{
+					if (flight[i].destination[j] != str[j])
+						break;
+					else
+						temp++;
+					if (temp == strlen(str))
 						print(flight, k, i);
-							flag = 1;
-							break;
-					}
+					flag = 1;
 				}
 			}
 		}
