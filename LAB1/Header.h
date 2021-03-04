@@ -15,4 +15,5 @@ void findCharNumber(struct Flights*, int);
 void sortFromMin(struct Flights*, int);
 void sortFromMax(struct Flights*, int);
 void deleteByTheOption(struct Flights*, int);
-void delExact(struct Flights* flight, int k, int i);
+void delExact(struct Flights*, int, int);
+void rightRegister(struct Flights*, int, int);
