@@ -938,4 +938,10 @@ void rightRegister(struct Flights* flight, int numberOfFlights, int numberOfStru
 		if ((flight[numberOfStructure].destination[i] >= 'A') && (flight[numberOfStructure].destination[i] <= 'Z'))
 			flight[numberOfStructure].destination[i] += 32;
 	}
+	for (int i = 1; i < 20; i++)
+	{
+		if ((flight[numberOfStructure].destination[i] >= 'a') && (flight[numberOfStructure].destination[i] <= 'z') &&
+			(((flight[numberOfStructure].destination[i-1])=='-') || ((flight[numberOfStructure].destination[i - 1]) == ' ')))
+			flight[numberOfStructure].destination[i] -= 32;
+	}
 }
