@@ -91,18 +91,48 @@ void add(struct Flights* flight, int numberOfFlights)
 		deleteEnter(flight, numberOfFlights, i);
 		rightRegister(flight, numberOfFlights, i);
 		rewind(stdin);
-		printf("Enter date(YYYYMMDD): ");
-		while (!scanf_s("%d", &flight[i].date) || (flight[i].date < 20000101) || (flight[i].date > 20301231))
+		printf("Enter date:\n");
+		int year=0, month=0, day=0;
+		printf("Enter year: ");
+		while (!scanf_s("%d", &year) || (year < 2000) || (year > 2050))
 		{
 			rewind(stdin);
 			printf("Incorrect value\n");
 		}
-		printf("Enter time(HHMMSS): ");
-		while (!scanf_s("%d", &flight[i].time) || (flight[i].time > 235959) || (flight[i].time < 1))
+		printf("Enter month: ");
+		while (!scanf_s("%d", &month) || (month < 1) || (month > 12))
 		{
 			rewind(stdin);
 			printf("Incorrect value\n");
 		}
+		printf("Enter day: ");
+		while (!scanf_s("%d", &day) || (day < 1) || (day > 31))
+		{
+			rewind(stdin);
+			printf("Incorrect value\n");
+		}
+		flight[i].date = year*10000+month*100+day;
+		printf("Enter time:\n");
+		int hour = 0, minute = 0, second = 0;
+		printf("Enter hours: ");
+		while (!scanf_s("%d", &hour) || (hour > 23) || (hour < 0))
+		{
+			rewind(stdin);
+			printf("Incorrect value\n");
+		}
+		printf("Enter minutes: ");
+		while (!scanf_s("%d", &minute) || (minute > 59) || (minute < 0))
+		{
+			rewind(stdin);
+			printf("Incorrect value\n");
+		}
+		printf("Enter seconds: ");
+		while (!scanf_s("%d", &second) || (second > 59) || (second < 0))
+		{
+			rewind(stdin);
+			printf("Incorrect value\n");
+		}
+		flight[i].time = hour*10000+minute*100+second;
 		printf("Enter price: ");
 		while (!scanf_s("%lf", &flight[i].price) || (flight[i].price <=0))
 		{
@@ -117,24 +147,28 @@ void add(struct Flights* flight, int numberOfFlights)
 void show(struct Flights* flight, int numberOfFlights)
 {
 	int choise=0;
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
-	printf("1)Show all notes\n2)Show 1 note\n");
-	while (!scanf_s("%d", &choise) || (choise<1) ||(choise>2))
+	printf("1)Show all notes\n2)Show 1 note\n3)Exit\n");
+	while (!scanf_s("%d", &choise) || (choise<1) ||(choise>3))
 	{
 		printf("Incorrect value. Try again.\n");
 		rewind(stdin);
 	}
 	printf("\n");
-	if (choise == 1)
+	switch(choise)
 	{
+	case 1:
 		system("CLS");
 		print(flight, numberOfFlights, -1);
 		menu(flight, numberOfFlights);
 		return;
-	}
-	else
-	{
+		break;
+	case 2:
 		printf("Enter number of note you want to see: ");
 		while (!scanf_s("%d", &choise) || (choise < 1) || (choise > numberOfFlights))
 		{
@@ -146,6 +180,11 @@ void show(struct Flights* flight, int numberOfFlights)
 		print(flight, numberOfFlights, choise);
 		menu(flight, numberOfFlights);
 		return;
+		break;
+	case 3:
+		menu(flight, numberOfFlights);
+		return;
+		break;
 	}
 	menu(flight, numberOfFlights);
 	return;
@@ -153,7 +192,11 @@ void show(struct Flights* flight, int numberOfFlights)
 void change(struct Flights* flight, int numberOfFlights)
 {
 	int numberToChange = 0, choise;
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	print(flight, numberOfFlights, -1);
 	printf("Enter number of note you want to change: ");
@@ -194,20 +237,50 @@ void change(struct Flights* flight, int numberOfFlights)
 			deleteEnter(flight, numberOfFlights, numberToChange);
 			break;
 		case 3:
-			printf("\nEnter date(YYYYMMDD): ");
-			while (!scanf_s("%d", &flight[numberToChange].date) || (flight[numberToChange].date < 20000101) || (flight[numberToChange].date > 20301231))
+			printf("Enter date:\n");
+			int year = 0, month = 0, day = 0;
+			printf("Enter year: ");
+			while (!scanf_s("%d", &year) || (year < 2000) || (year > 2050))
 			{
 				rewind(stdin);
 				printf("Incorrect value\n");
 			}
+			printf("Enter month: ");
+			while (!scanf_s("%d", &month) || (month < 1) || (month > 12))
+			{
+				rewind(stdin);
+				printf("Incorrect value\n");
+			}
+			printf("Enter day: ");
+			while (!scanf_s("%d", &day) || (day < 1) || (day > 31))
+			{
+				rewind(stdin);
+				printf("Incorrect value\n");
+			}
+			flight[numberToChange].date = year * 10000 + month * 100 + day;
 			break;
 		case 4:
-			printf("\nEnter time(HHMMSS): ");
-			while (!scanf_s("%d", &flight[numberToChange].time) || (flight[numberToChange].time > 235959) || (flight[numberToChange].time < 1))
+			printf("Enter time:\n");
+			int hour = 0, minute = 0, second = 0;
+			printf("Enter hours: ");
+			while (!scanf_s("%d", &hour) || (hour > 23) || (hour < 0))
 			{
 				rewind(stdin);
 				printf("Incorrect value\n");
 			}
+			printf("Enter minutes: ");
+			while (!scanf_s("%d", &minute) || (minute > 59) || (minute < 0))
+			{
+				rewind(stdin);
+				printf("Incorrect value\n");
+			}
+			printf("Enter seconds: ");
+			while (!scanf_s("%d", &second) || (second > 59) || (second < 0))
+			{
+				rewind(stdin);
+				printf("Incorrect value\n");
+			}
+			flight[numberToChange].time = hour * 10000 + minute * 100 + second;
 			break;
 		case 5:
 			printf("\nEnter price: ");
@@ -228,7 +301,11 @@ void change(struct Flights* flight, int numberOfFlights)
 void del(struct Flights* flight, int numberOfFlights)
 {
 	int choise = 0;
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	printf("1)Delete all notes\n2)Delete 1 note\n3)Delete by option\n4)Exit\n");
 	while (!scanf_s("%d", &choise) || (choise < 1) || (choise > 3))
@@ -268,7 +345,11 @@ void del(struct Flights* flight, int numberOfFlights)
 }
 void search(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");
@@ -394,7 +475,11 @@ void search(struct Flights* flight, int numberOfFlights)
 }
 void sort(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	printf("How to sort:\n");
 	printf("1)From Min to Max\n");
@@ -425,11 +510,14 @@ void sort(struct Flights* flight, int numberOfFlights)
 		return;
 		break;
 	}
-	menu(flight, numberOfFlights);
 }
 void sortFromMin(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	struct Flights temp;
 	int choise;
 	system("CLS");
@@ -523,15 +611,21 @@ void sortFromMin(struct Flights* flight, int numberOfFlights)
 		break;
 	case 6:
 		system("CLS");
+		print(flight, numberOfFlights, -1);
 		menu(flight, numberOfFlights);
 		return;
 	}
 	system("CLS");
+	print(flight, numberOfFlights, -1);
 	menu(flight, numberOfFlights);
 }
 void sortFromMax(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	struct Flights temp;
 	int choise;
 	system("CLS");
@@ -625,19 +719,20 @@ void sortFromMax(struct Flights* flight, int numberOfFlights)
 		break;
 	case 6:
 		system("CLS");
+		print(flight, numberOfFlights, -1);
 		menu(flight, numberOfFlights);
 		return;
 	}
 	system("CLS");
+	print(flight, numberOfFlights, -1);
 	menu(flight, numberOfFlights);
 }
-void check(struct Flights* flight, int numberOfFlights)
+int check(struct Flights* flight, int numberOfFlights)
 {
 	if (numberOfFlights == 0)
 	{
 		printf("Ooops...No notes found.\n");
-		menu(flight, numberOfFlights);
-		return;
+		return -1;
 	}
 }
 void print(struct Flights* flight, int numberOfFlights, int flightToPrint)
@@ -687,7 +782,11 @@ void deleteEnter(struct Flights* flight, int numberOfFlights, int numberOfStruct
 }
 void partSearch(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");
@@ -791,7 +890,11 @@ void findCharNumber(struct Flights* flight, int numberOfFlights)
 }
 void deleteByTheOption(struct Flights* flight, int numberOfFlights)
 {
-	check(flight, numberOfFlights);
+	if (check(flight, numberOfFlights) == -1)
+	{
+		menu(flight, numberOfFlights);
+		return;
+	}
 	system("CLS");
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");

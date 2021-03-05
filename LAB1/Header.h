@@ -6,7 +6,7 @@ void del(struct Flights*, int);
 void search(struct Flights*, int);
 void print(struct Flights*, int, int);
 void sort(struct Flights*, int);
-void check(struct Flights*, int);
+int check(struct Flights*, int);
 void partSearch(struct Flights*, int);
 void printLine();
 void deleteEnter(struct Flights*, int, int);
