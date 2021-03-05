@@ -4,8 +4,8 @@
 int main()
 {
 	struct Flights* flight=NULL;
-	int k=0;
-	int n=menu(flight, k);
+	int numberOfFlights=0;
+	int n=menu(flight, numberOfFlights);
 	while (n == 8)
 	{
 		free(flight);

@@ -791,9 +791,12 @@ void partSearch(struct Flights* flight, int numberOfFlights)
 	printf("Select option to search:\n");
 	printf("1)Number of flight\n");
 	printf("2)Destination\n");
-	printf("3)Exit\n");
+	printf("3)Date\n");
+	printf("4)Time\n");
+	printf("5)Price\n");
+	printf("6)Exit\n");
 	int choise;
-	while (!scanf_s("%d", &choise) || (choise < 1) || (choise > 3))
+	while (!scanf_s("%d", &choise) || (choise < 1) || (choise > 6))
 	{
 		printf("Incorrect value. Try again.\n");
 		rewind(stdin);
@@ -804,14 +807,29 @@ void partSearch(struct Flights* flight, int numberOfFlights)
 	case 1:
 		system("CLS");
 		printf("Enter symbols of number (*a*b*): ");
-		findCharNumber(flight, numberOfFlights);
+		findCharNumber(flight, numberOfFlights, 1);
 		break;
 	case 2:
 		system("CLS");
 		printf("Enter symbols of destination (*a*b*): ");
-		findChar(flight, numberOfFlights);
+		findCharNumber(flight, numberOfFlights, 2);
 		break;
 	case 3:
+		system("CLS");
+		printf("Enter symbols of number (*a*b*): ");
+		findCharNumber(flight, numberOfFlights, 3);
+		break;
+	case 4:
+		system("CLS");
+		printf("Enter symbols of number (*a*b*): ");
+		findCharNumber(flight, numberOfFlights, 4);
+		break;
+	case 5:
+		system("CLS");
+		printf("Enter symbols of number (*a*b*): ");
+		findCharNumber(flight, numberOfFlights, 5);
+		break;
+	case 6:
 		system("CLS");
 		menu(flight, numberOfFlights);
 		return;
@@ -819,41 +837,7 @@ void partSearch(struct Flights* flight, int numberOfFlights)
 	}
 	menu(flight, numberOfFlights);
 }
-void findChar(struct Flights* flight, int numberOfFlights)
-{
-	char str[20];
-	char compareChar;
-	int flag = 0, flag1 = 0;
-	rewind(stdin);
-	fgets(str, 20, stdin);
-	rewind(stdin);
-	for (int l = 0; l < numberOfFlights; l++) //ïî ñòðóêòóðíûì ïåðåìåííûì
-	{
-		int j = 0, i = 0, j1 = 0;
-		for (i; i < strlen(str); i++) //ïî ñòðîêå ïîèñêà
-		{
-			while ((str[i] != '*') && (str[i] != '\n') && (str[i] != '\0'))
-			{
-				compareChar = str[i];
-				flag1++;
-				for (j = j1; j < strlen(flight[l].destination); j++)
-				{
-					if (flight[l].destination[j] == compareChar)
-					{
-						flag++;
-						j1 = j;
-						j = strlen(flight[l].destination);
-					}
-				}
-				break;
-			}
-		}
-		if ((flag == flag1) && (flag1 != 0))	print(flight, numberOfFlights, l);
-		flag = 0;
-		flag1 = 0;
-	}
-}
-void findCharNumber(struct Flights* flight, int numberOfFlights)
+void findCharNumber(struct Flights* flight, int numberOfFlights, int choice)
 {
 	char str[20], str2[20]; //str1 äëÿ èñêîìîãî, str2 äëÿ ñòðóêòóðíîãî int
 	char compareChar;
@@ -861,11 +845,30 @@ void findCharNumber(struct Flights* flight, int numberOfFlights)
 	rewind(stdin);
 	fgets(str, 20, stdin);
 	rewind(stdin);
+	int temp; double temp2;
 	for (int l = 0; l < numberOfFlights; l++) //ïî ñòðóêòóðíûì ïåðåìåííûì
 	{
-		sprintf_s(str2, "%d", flight[l].number); //ïåðåâîäèì int â char
+		switch (choice)
+		{
+		case 1:
+			sprintf_s(str2, "%d", flight[l].number);
+			break;
+		case 2:
+			for (int i = 0; i < 20; i++)
+				str2[i] = flight[l].destination[i];
+			break;
+		case 3:
+			sprintf_s(str2, "%d", flight[l].date);
+			break;
+		case 4:
+			sprintf_s(str2, "%d", flight[l].time);
+			break;
+		case 5:
+			sprintf_s(str2, "%lf", flight[l].price);
+			break;
+		}
 		int j = 0, i = 0, j1 = 0;
-		for (i; i < strlen(str); i++) //ïî ñòðîêå ïîèñêà
+		for (i; i < strlen(str); i++)
 		{
 			while ((str[i] != '*') && (str[i] != '\n') && (str[i] != '\0'))
 			{
