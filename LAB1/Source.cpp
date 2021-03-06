@@ -550,22 +550,19 @@ void sortFromMin(struct Flights* flight, int numberOfFlights)
 		}
 		break;
 	case 2:
-		for (int i = 0; i < numberOfFlights; i++)
-		{
-			for (int z = numberOfFlights - 2; z >= i; z--)
+			for (int i = 0; i < numberOfFlights; i++)
 			{
-				for (int j = 0; j < strlen(flight[z].destination); j++)
+				for (int j = 0; j < numberOfFlights-1; j++)
 				{
-					if (flight[z].destination[j] > flight[z + 1].destination[j])
+					if (strcmp(flight[j].destination , flight[j + 1].destination)>0)
 					{
-						temp = flight[z];
-						flight[z] = flight[z + 1];
-						flight[z + 1] = temp;
-						j = strlen(flight[z].destination);
+						temp = flight[j];
+						flight[j] = flight[j + 1];
+						flight[j + 1] = temp;
+						break;
 					}
 				}
 			}
-		}
 		break;
 	case 3:
 		for (int i = 0; i < numberOfFlights; i++)
@@ -658,22 +655,19 @@ void sortFromMax(struct Flights* flight, int numberOfFlights)
 		}
 		break;
 	case 2:
-		for (int i = 0; i < numberOfFlights; i++)
-		{
-			for (int z = 0; z < numberOfFlights - 1; z++)
+			for (int i = 0; i < numberOfFlights; i++)
 			{
-				for (int j = 0; j < strlen(flight[z].destination); j++)
+				for (int j = 0; j < numberOfFlights - 1; j++)
 				{
-					if (flight[z].destination[j] < flight[z + 1].destination[j])
+					if (strcmp(flight[j].destination, flight[j + 1].destination)<0)
 					{
-						temp = flight[z];
-						flight[z] = flight[z + 1];
-						flight[z + 1] = temp;
-						j = strlen(flight[z].destination);
+						temp = flight[j];
+						flight[j] = flight[j + 1];
+						flight[j + 1] = temp;
+						break;
 					}
 				}
 			}
-		}
 		break;
 	case 3:
 		for (int i = 0; i < numberOfFlights; i++)
