@@ -57,7 +57,6 @@ struct Series* add(struct Series* serial, int numberOfSeries)
 	for (int i = 0; i < numberOfSeries; i++)
 	{
 		serial[i].size = numberOfSeries;
-
 	}
 	for (int i = startToAdd; i < numberOfSeries; i++)
 	{
@@ -67,6 +66,7 @@ struct Series* add(struct Series* serial, int numberOfSeries)
 		fgets(serial[i].title, 20, stdin);
 		rewind(stdin);
 		deleteEnter(serial, numberOfSeries, i, 1);
+		rightRegister(serial, numberOfSeries, i);
 		printf("Enter number of episodes: ");
 		while (!scanf_s("%d", &serial[i].episodes) || (serial[i].episodes < 1))
 		{
@@ -775,6 +775,7 @@ struct Series* change(struct Series* serial, int numberOfSeries)
 			fgets(serial[numberToChange].title, 20, stdin);
 			rewind(stdin);
 			deleteEnter(serial, numberOfSeries, numberToChange, 1);
+			rightRegister(serial, numberOfSeries, numberToChange);
 			break;
 		case 2:
 			printf("Enter new number of episodes: ");
@@ -808,4 +809,118 @@ struct Series* change(struct Series* serial, int numberOfSeries)
 	} while (exit != 1);
 	system("CLS");
 	return serial;
+}
+void partSearch(struct Series* serial, int numberOfSeries)
+{
+	if (check(numberOfSeries) == -1) return;
+	system("CLS");
+	printf("Select option to search:\n");
+	printf("1)Title\n");
+	printf("2)Number of episodes\n");
+	printf("3)Date of release\n");
+	printf("4)Number of seasons\n");
+	printf("5)Exit\n");
+	int choice;
+	while (!scanf_s("%d", &choice) || (choice < 1) || (choice > 5))
+	{
+		printf("Incorrect value. Try again.\n");
+		rewind(stdin);
+	}
+	printf("\n");
+	switch (choice)
+	{
+	case 1:
+		system("CLS");
+		printf("Enter symbols of title (*a*b*): ");
+		findCharNumber(serial, numberOfSeries, 1);
+		break;
+	case 2:
+		system("CLS");
+		printf("Enter symbols of numer of episodes (*a*b*): ");
+		findCharNumber(serial, numberOfSeries, 2);
+		break;
+	case 3:
+		system("CLS");
+		printf("Enter symbols of date (*a*b*): ");
+		findCharNumber(serial, numberOfSeries, 3);
+		break;
+	case 4:
+		system("CLS");
+		printf("Enter symbols of number of seasons (*a*b*): ");
+		findCharNumber(serial, numberOfSeries, 4);
+		break;
+	case 5:
+		system("CLS");
+		return;
+		break;
+	}
+}
+void findCharNumber(struct Series* serial, int numberOfSeries, int choice)
+{
+	char str[20], str2[20];
+	char compareChar;
+	int flag = 0, flag1 = 0;
+	rewind(stdin);
+	fgets(str, 20, stdin);
+	rewind(stdin);
+	for (int l = 0; l < numberOfSeries; l++)
+	{
+		switch (choice)
+		{
+		case 1:
+			for (int i = 0; i < 20; i++)
+				str2[i] = serial[l].title[i];
+			break;
+		case 2:
+			sprintf_s(str2, "%d", serial[l].episodes);
+			break;
+		case 3:
+			if (serial[l].isType != 1) continue;
+			for (int i = 0; i < 20; i++)
+				str2[i] = serial[l].info.date[i];
+			break;
+		case 4:
+			if (serial[l].isType == 1) continue;
+			sprintf_s(str2, "%d", serial[l].info.seasons);
+			break;
+		}
+		int j = 0, i = 0, j1 = 0;
+		for (i; i < strlen(str); i++)
+		{
+			while ((str[i] != '*') && (str[i] != '\n') && (str[i] != '\0'))
+			{
+				compareChar = str[i];
+				flag1++;
+				for (j = j1; j < strlen(str2); j++)
+				{
+					if (str2[j] == compareChar)
+					{
+						flag++;
+						j1 = j;
+						j = strlen(str2);
+					}
+				}
+				break;
+			}
+		}
+		if ((flag == flag1) && (flag1 != 0))	print(serial, numberOfSeries, l);
+		flag = 0;
+		flag1 = 0;
+	}
+}
+void rightRegister(struct Series* serial, int numberOfSeries, int numberOfStructure)
+{
+	if ((serial[numberOfStructure].title[0] >= 'a') && (serial[numberOfStructure].title[0] <= 'z'))
+		serial[numberOfStructure].title[0] -= 32;
+	for (int i = 1; i < 20; i++)
+	{
+		if ((serial[numberOfStructure].title[i] >= 'A') && (serial[numberOfStructure].title[i] <= 'Z'))
+			serial[numberOfStructure].title[i] += 32;
+	}
+	for (int i = 1; i < 20; i++)
+	{
+		if ((serial[numberOfStructure].title[i] >= 'a') && (serial[numberOfStructure].title[i] <= 'z') &&
+			(((serial[numberOfStructure].title[i - 1]) == '-') || ((serial[numberOfStructure].title[i - 1]) == ' ')))
+			serial[numberOfStructure].title[i] -= 32;
+	}
 }

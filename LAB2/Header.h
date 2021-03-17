@@ -15,3 +15,6 @@ void sortFromMin(struct Series*, int);
 void sortFromMax(struct Series*, int);
 void sort(struct Series*, int);
 struct Series* change(struct Series*, int);
+void partSearch(struct Series*, int);
+void findCharNumber(struct Series*, int, int);
+void rightRegister(struct Series*, int, int);
