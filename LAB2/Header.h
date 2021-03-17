@@ -11,3 +11,7 @@ void deleteEnter(struct Series*, int, int, int);
 void search(struct Series*, int);
 struct Series* delExact(struct Series*, int, int);
 struct Series* deleteByTheOption(struct Series*, int);
+void sortFromMin(struct Series*, int);
+void sortFromMax(struct Series*, int);
+void sort(struct Series*, int);
+struct Series* change(struct Series*, int);

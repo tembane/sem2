@@ -19,7 +19,10 @@ int main()
 			numberOfSeries = size(serial, numberOfSeries);
 			break;
 		case 4:	search(serial, numberOfSeries); break;
-		case 5: return 0;
+		case 5: sort(serial, numberOfSeries); break;
+		case 6: serial=change(serial, numberOfSeries); break;
+		case 7:
+		case 8: return 0;
 		default:
 			printf("Incorrect value! Try again...\n");
 			system("CLS");
